@@ -12,7 +12,7 @@ print("""\
 |_____| / \_//  \ V /  __/ |   \ V  V /| |  | | |_| ||  __/ | | | |_____|
         \___/    \_/ \___|_|    \_/\_/ |_|  |_|\__|\__\___|_| |_|        """)
 
-print("developer: brazil_502")
+print("developer(s): brazil_502")
 
 path = input("the file name:- ")
 
