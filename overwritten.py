@@ -34,9 +34,6 @@ if os.path.exists(path):
     print("reading file...")
     time.sleep(0.1)
     print("- FILE CONTENTS -")
-elif os.path.isdir(path):
-           print("that is a directory!")
-              
 else:
     print("that file does not exist")
 
