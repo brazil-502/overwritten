@@ -1,39 +1,54 @@
 #overwritter
 #developer: brazil_502
-#version: 1.0
+#version: 1.1
 
 import os
-import time
 
-print("""\
-           ___                               _ _   _                     
-          /___\__   _____ _ ____      ___ __(_) |_| |_ ___ _ __          
- _____   //  //\ \ / / _ \ '__\ \ /\ / / '__| | __| __/ _ \ '_ \   _____ 
-|_____| / \_//  \ V /  __/ |   \ V  V /| |  | | |_| ||  __/ | | | |_____|
-        \___/    \_/ \___|_|    \_/\_/ |_|  |_|\__|\__\___|_| |_|        """)
+# ANSI escape codes
+GREEN = '\033[92m'
+RESET = '\033[0m'
 
-print("developer(s): brazil_502")
+def display_status():
+    # Only greening the UI elements
+    print(f"\n{GREEN}--- Current Directory: {os.getcwd()} ---{RESET}")
+    print(f"{GREEN}Contents:{RESET}", os.listdir())
 
-path = input("the file name:- ")
+def manager():
+    print(f"{GREEN}--- File Manager & Overwriter ---{RESET}")
+    
+    while True:
+        display_status()
+        command = input(f"\n{GREEN}Commands: [cd] change dir, [ls] list, [edit] overwrite, [exit] quit{RESET}\n> ").strip().lower()
 
-if os.path.exists(path):
-    print("that file exists!")
-    time.sleep(0.1)
-    print("- FILE CONTENTS -")
-else:
-    print("that file does not exist")
+        if command == 'cd':
+            new_path = input(f"{GREEN}Enter path: {RESET}")
+            try:
+                os.chdir(new_path)
+            except Exception as e:
+                print(f"{GREEN}Error: {e}{RESET}")
 
-try:
-    with open(path) as file:
-        print(file.read())
-        print("- - - - - -")
-except FileNotFoundError:
-    print(" ")
+        elif command == 'ls':
+            continue 
 
-if os.path.exists(path):
-    with open(path, 'w') as file:
-        file.write(input("enter the override:- "))
-        time.sleep(0.1)
-        print("Done!")
+        elif command == 'edit':
+            filename = input(f"{GREEN}Enter filename to overwrite: {RESET}")
+            if os.path.exists(filename):
+                # We do NOT apply GREEN here so the file content stays original
+                with open(filename, 'r') as f:
+                    print("- - - FILE CONTENT - - -")
+                    print(f.read())
+                    print("- - - - - - - - - - - -")
+                
+                new_content = input(f"{GREEN}Enter new content: {RESET}")
+                with open(filename, 'w') as f:
+                    f.write(new_content)
+                print(f"{GREEN}Success!{RESET}")
+            else:
+                print(f"{GREEN}File not found.{RESET}")
 
+        elif command == 'exit':
+            break
+
+if __name__ == "__main__":
+    manager()
 
